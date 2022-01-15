@@ -8,12 +8,13 @@ router.get("/", async function (req, res, next) {
   try {
     const [rows, fields] = await global.connection.execute(
       "SELECT * FROM `pcm` JOIN `ticket` on `pcm`.`id` = `ticket`.`pcmId` WHERE `pcm`.`managerId` = ? AND `pcm`.`customerId`= ? AND `pcm`.`projectId` = ? ",
-      [req.query.managerId, req.query.customerId, req.query.projectId]
+      [req.query.managerId, , req.query.projectId]
     );
     res.send(rows);
   } catch (error) {
     console.log(error);
-    res.send(error);
+    // res.send(error);
+    next(error);
   }
 });
 
